@@ -15,7 +15,30 @@ class ToDoListAdapter extends DynamicFlowAdapter<PageState> {
         );
 }
 
-class _ToDoListConnector implements Connector<PageState, List<ItemBean>> {
+//class _ToDoListConnector implements Connector<PageState, List<ItemBean>> {
+//  @override
+//  List<ItemBean> get(PageState state) {
+//    if (state.toDos?.isNotEmpty == true) {
+//      return state.toDos
+//          .map<ItemBean>((ToDoState data) => ItemBean('toDo', data))
+//          .toList(growable: true);
+//    } else {
+//      return <ItemBean>[];
+//    }
+//  }
+//
+//  @override
+//  void set(PageState state, List<ItemBean> toDos) {
+//    if (toDos?.isNotEmpty == true) {
+//      state.toDos = List<ToDoState>.from(
+//          toDos.map<ToDoState>((ItemBean bean) => bean.data).toList());
+//    } else {
+//      state.toDos = <ToDoState>[];
+//    }
+//  }
+//}
+
+class _ToDoListConnector implements ConnIm<PageState, List<ItemBean>> {
   @override
   List<ItemBean> get(PageState state) {
     if (state.toDos?.isNotEmpty == true) {
@@ -28,12 +51,13 @@ class _ToDoListConnector implements Connector<PageState, List<ItemBean>> {
   }
 
   @override
-  void set(PageState state, List<ItemBean> toDos) {
-    if (toDos?.isNotEmpty == true) {
-      state.toDos = List<ToDoState>.from(
-          toDos.map<ToDoState>((ItemBean bean) => bean.data).toList());
+  PageState set(PageState state, List<ItemBean> subState) {
+    if (state.toDos?.isNotEmpty == true) {
+      return state.clone()
+        ..toDos = List<ToDoState>.from(
+            subState.map<ToDoState>((ItemBean bean) => bean.data).toList());
     } else {
-      state.toDos = <ToDoState>[];
+      return state;
     }
   }
 }

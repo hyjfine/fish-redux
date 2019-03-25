@@ -19,6 +19,22 @@ class ConnOp<S, P> implements Connector<S, P> {
   Dependent<S> operator +(Logic<P> logic) => createDependent<S, P>(this, logic);
 }
 
+/// connect for Immutable state.
+class ConnIm<S, P> implements Connector<S, P> {
+  final P Function(S) _getter;
+  final S Function(S, P) _setter;
+
+  ConnIm({P Function(S) get, S Function(S, P) set})
+      : _getter = get,
+        _setter = set;
+
+  @override
+  P get(S state) => _getter(state);
+
+  @override
+  S set(S state, P subState) => state;
+}
+
 abstract class MapLike {
   Map<String, Object> _fieldsMap = <String, Object>{};
 

@@ -26,8 +26,18 @@ SubReducer<T> subReducer<T, P>(Connector<T, P> connector, Reducer<P> reducer) {
     final P newProps = reducer(props, action);
     final bool hasChanged = newProps != props;
     final T copy = (hasChanged && !isStateCopied) ? _clone<T>(state) : state;
+
+    /// check state is Changed
     if (hasChanged) {
-      connector.set(copy, newProps);
+      final T newState = connector.set(copy, newProps);
+
+      /// check the [connector.set] signature.
+      /// if the signature is void newState == null
+      if(newState != null) {
+        return newState;
+      } else {
+        connector.set(copy, newProps);
+      }
     }
     return copy;
   };

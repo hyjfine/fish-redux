@@ -96,7 +96,7 @@ abstract class Connector<S, P> {
       _Connector<S, P>(get, set);
 
   P get(S state);
-  void set(S state, P subState);
+  dynamic set(S state, P subState);
 }
 
 /// An implementation of the default Connector<S, P>

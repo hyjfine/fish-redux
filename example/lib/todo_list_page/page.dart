@@ -21,7 +21,7 @@ class ToDoListPage extends Page<PageState, Map<String, dynamic>> {
                 'report': ReportConnector() + ReportComponent()
               }),
           middleware: <Middleware<PageState>>[
-            logMiddleware(tag: 'ToDoListPage'),
+//            logMiddleware(tag: 'ToDoListPage'),
           ],
         );
 }
